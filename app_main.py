@@ -2,14 +2,12 @@ from flask import Flask, request
 from flask_restx import Api
 from flask_cors import CORS
 import urllib
-from movieSearch import MoiveSearch
+from movie_search import scean_search, line_search
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 app.config['JSON_AS_ASCII'] = False
-
-movieSearch = MoiveSearch()
 
 
 @app.route('/search', methods=["GET", "POST"])
@@ -22,7 +20,10 @@ def qna():
         is_scene = data[key_list[0]]
         question = data[key_list[1]]
 
-        resp = movieSearch.get_search_result(question, is_scene)
+        if is_scene:
+            resp = scean_search(question)
+        else:
+            resp = line_search(question)
 
         return resp
 
