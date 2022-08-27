@@ -31,7 +31,7 @@ def qna():
         data = urllib.parse.urlencode(request.args, doseq=True)
         decoded_data = urllib.parse.parse_qs(data, encoding='utf-8')
 
-
+#authbind 써서 권한 문제 해결할 수 있음
 if __name__ == "__main__":
     app.run(host=("0.0.0.0"), debug=True, port=443)
 # GET, PUT, DELETE -> request.args.get('key)
