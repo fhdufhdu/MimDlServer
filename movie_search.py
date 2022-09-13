@@ -4,7 +4,7 @@ from sentence_transformers import SentenceTransformer, util
 import numpy as np
 import json
 
-with open('./config', 'r', encoding="utf-8") as file:
+with open('.config', 'r', encoding="utf-8") as file:
     config = json.load(file)
 
 es = Elasticsearch(config['es'])
@@ -43,7 +43,8 @@ def scean_search(query):
                          "caption", "director", "actor", "synopsis", "feature", "genre", "title", "subtitle", 'translation'])
 
         for doc in docs:
-            result_dict['data'].append(doc['id'])
+            result_dict['data'].append({'id': doc['id']})
+        return result_dict
 
     except Exception as e:
         print(e)
@@ -65,11 +66,12 @@ def line_search(query):
                 subtitles.append(
                     docs[i]['translation'][j])
             result = {
-                "title": docs[i]['title'],
+                "id": docs[i]['id'],
                 "subtitle": subtitles
             }
 
             result_dict['data'].append(result)
+            return result_dict
 
     except Exception as e:
         print(e)
